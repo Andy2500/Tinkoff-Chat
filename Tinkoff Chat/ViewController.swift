@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  Tinkoff Chat
 //
-//  Created by Андрей on 07.03.17.
-//  Copyright © 2017 Andrey. All rights reserved.
+//  Created by Andrey Nagaev on 07.03.17.
+//  Copyright © 2017 Andrey Nagaev. All rights reserved.
 //
 
 import UIKit
@@ -26,7 +26,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         userImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.imageTappend)))
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.endEditing)))
+     
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(closeButtonPressed))
         
+    }
+    
+    func closeButtonPressed(){
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func doneButtonPressed(_ sender: Any) {
