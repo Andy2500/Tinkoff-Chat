@@ -21,11 +21,13 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
         conversations.append([])
         conversations.append([])
         
-        conversations[0].append(Conversation.init(name: "Alex", message: text, date: Date().addingTimeInterval(-86401), online: true, hasUnreadMessages: false, otherMessages: [Message.init(text: "Да?"), Message.init(text: "\"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"")]))
-        conversations[0].append(Conversation.init(name: "Andrey", message: text, date: Date().addingTimeInterval(-86401), online: true, hasUnreadMessages: true, otherMessages: [Message.init(text: "Да?"), Message.init(text: "\"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"")]))
-        conversations[1].append(Conversation.init(name: "Oleg", message: nil, date: Date(), online: false, hasUnreadMessages: true, otherMessages: []))
-        
-        
+        conversations[0].append(Conversation.init(name: "Alex", message: text, date: Date(), online: true, hasUnreadMessages: false, otherMessages: [Message.init(text: "Да?"), Message.init(text: "\"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"")]))
+        conversations[0].append(Conversation.init(name: "Andrey", message: "\"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"", date: Date().addingTimeInterval(-86401), online: true, hasUnreadMessages: true, otherMessages: []))
+        conversations[0].append(Conversation.init(name: "Artemkiss", message: "Привет!", date: Date().addingTimeInterval(-1000), online: true, hasUnreadMessages: true, otherMessages: []))
+        conversations[0].append(Conversation.init(name: "Магазин одежды", message: "Скидки, скидки, скидки!", date: Date(), online: true, hasUnreadMessages: false, otherMessages: []))
+        conversations[1].append(Conversation.init(name: "Oleg", message: nil, date: Date(), online: false, hasUnreadMessages: false, otherMessages: []))
+        conversations[1].append(Conversation.init(name: "Другой магазин одежды", message: "Скидки, скидки, скидки!", date: Date().addingTimeInterval(-1000000), online: false, hasUnreadMessages: true, otherMessages: []))
+        conversations[1].append(Conversation.init(name: "Очередной спамер", message: "Купите это и купите то", date: Date().addingTimeInterval(-1000000), online: false, hasUnreadMessages: false, otherMessages: []))
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 65
@@ -53,19 +55,26 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
             cell.messageTextLabel.font = UIFont.boldSystemFont(ofSize: 17)
         }
         
-        if conversation.date! <= Date().addingTimeInterval(-86400){
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd MMM"
-            cell.dateLabel.text = formatter.string(from: conversation.date!)
+        if (conversation.date != nil){
+            if conversation.date! <= Date().addingTimeInterval(-86400){
+                let formatter = DateFormatter()
+                formatter.dateFormat = "dd MMM"
+                cell.dateLabel.text = formatter.string(from: conversation.date!)
+            } else {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "HH:mm"
+                cell.dateLabel.text = formatter.string(from: conversation.date!)
+            }
         } else {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            cell.dateLabel.text = formatter.string(from: conversation.date!)
+            cell.dateLabel.text = "Никогда"
         }
-        
         
         if conversation.online! {
             cell.contentView.backgroundColor = UIColor(displayP3Red: 255, green: 255, blue: 0, alpha: 0.1)
+        }
+        
+        if conversation.hasUnreadMessages!{
+            cell.messageTextLabel.font = UIFont.systemFont(ofSize: 17)
         }
         
         return cell

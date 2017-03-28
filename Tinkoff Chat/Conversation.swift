@@ -20,7 +20,7 @@ class Conversation:NSObject {
         super.init()
     }
     
-    init(name: String, message: String?, date: Date, online:Bool, hasUnreadMessages: Bool, otherMessages:[Message]?) {
+    init(name: String?, message: String?, date: Date?, online:Bool?, hasUnreadMessages: Bool?, otherMessages:[Message]?) {
         self.name = name
         self.message = message
         self.date = date

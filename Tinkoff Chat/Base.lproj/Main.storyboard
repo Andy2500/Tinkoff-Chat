@@ -183,7 +183,7 @@
                             <constraint firstItem="Dkl-2j-OLT" firstAttribute="top" secondItem="Vmi-f2-qFg" secondAttribute="bottom" constant="8" id="zkZ-nQ-7Iw"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="T9N-De-yYS"/>
+                    <navigationItem key="navigationItem" title="Profile" id="T9N-De-yYS"/>
                     <connections>
                         <outlet property="aboutTextView" destination="LOl-lY-XH0" id="5A3-9a-VtI"/>
                         <outlet property="colorLabel" destination="Vmi-f2-qFg" id="pD7-ky-tTj"/>
