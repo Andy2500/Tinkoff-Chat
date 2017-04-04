@@ -19,6 +19,10 @@
 		55D41EA91E8AAE6E006C38F2 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D41EA81E8AAE6E006C38F2 /* ConversationTableViewCell.swift */; };
 		55D41EAF1E8ADBE3006C38F2 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D41EAE1E8ADBE3006C38F2 /* Message.swift */; };
 		55D41EB11E8ADF43006C38F2 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D41EB01E8ADF43006C38F2 /* MessageTableViewCell.swift */; };
+		55DDE5531E92D310003894BC /* SaveOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DDE5521E92D310003894BC /* SaveOperation.swift */; };
+		55DDE5551E93EC22003894BC /* MyFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DDE5541E93EC22003894BC /* MyFileManager.swift */; };
+		55DDE5571E9401B0003894BC /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DDE5561E9401B0003894BC /* GCDDataManager.swift */; };
+		55DDE55A1E9401D1003894BC /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DDE5591E9401D1003894BC /* OperationDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +40,10 @@
 		55D41EA81E8AAE6E006C38F2 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		55D41EAE1E8ADBE3006C38F2 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		55D41EB01E8ADF43006C38F2 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
+		55DDE5521E92D310003894BC /* SaveOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveOperation.swift; sourceTree = "<group>"; };
+		55DDE5541E93EC22003894BC /* MyFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyFileManager.swift; sourceTree = "<group>"; };
+		55DDE5561E9401B0003894BC /* GCDDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
+		55DDE5591E9401D1003894BC /* OperationDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,9 +77,10 @@
 			isa = PBXGroup;
 			children = (
 				55111CC81E6E9EB0009BB494 /* AppDelegate.swift */,
-				55D41EAC1E8AD7BD006C38F2 /* Models */,
 				556C00B21E895802004B4B1C /* Controllers */,
+				55DDE55B1E9401E2003894BC /* Data */,
 				55111CCC1E6E9EB0009BB494 /* Main.storyboard */,
+				55D41EAC1E8AD7BD006C38F2 /* Models */,
 				556C00B01E8957DC004B4B1C /* Supporting Files */,
 			);
 			path = "Tinkoff Chat";
@@ -107,6 +116,17 @@
 				55D41EAE1E8ADBE3006C38F2 /* Message.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		55DDE55B1E9401E2003894BC /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				55DDE5591E9401D1003894BC /* OperationDataManager.swift */,
+				55DDE5521E92D310003894BC /* SaveOperation.swift */,
+				55DDE5541E93EC22003894BC /* MyFileManager.swift */,
+				55DDE5561E9401B0003894BC /* GCDDataManager.swift */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,12 +202,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55DDE5531E92D310003894BC /* SaveOperation.swift in Sources */,
+				55DDE55A1E9401D1003894BC /* OperationDataManager.swift in Sources */,
 				55111CD11E6E9EB0009BB494 /* Tinkoff_Chat.xcdatamodeld in Sources */,
 				55D41EA71E8AAE4A006C38F2 /* Conversation.swift in Sources */,
 				55D41EB11E8ADF43006C38F2 /* MessageTableViewCell.swift in Sources */,
 				556C00AF1E8957D3004B4B1C /* ConversationsListViewController.swift in Sources */,
 				55D41EA91E8AAE6E006C38F2 /* ConversationTableViewCell.swift in Sources */,
+				55DDE5571E9401B0003894BC /* GCDDataManager.swift in Sources */,
 				556C00B41E895854004B4B1C /* ConversationViewController.swift in Sources */,
+				55DDE5551E93EC22003894BC /* MyFileManager.swift in Sources */,
 				55D41EAF1E8ADBE3006C38F2 /* Message.swift in Sources */,
 				55111CCB1E6E9EB0009BB494 /* ViewController.swift in Sources */,
 				55111CC91E6E9EB0009BB494 /* AppDelegate.swift in Sources */,
