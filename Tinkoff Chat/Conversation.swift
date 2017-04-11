@@ -9,27 +9,24 @@
 import Foundation
 
 class Conversation:NSObject {
+    var userID: String?
     var name: String?
-    var message: String?
-    var date: Date?
     var online: Bool?
     var hasUnreadMessages: Bool?
-    var otherMessages: [Message] = []
+    var messages: [Message] = []
     
     override init(){
         super.init()
     }
     
-    init(name: String?, message: String?, date: Date?, online:Bool?, hasUnreadMessages: Bool?, otherMessages:[Message]?) {
+    init(name: String?, online:Bool? = true, hasUnreadMessages: Bool? = false, messages:[Message]? = nil, userID: String?) {
         self.name = name
-        self.message = message
-        self.date = date
         self.online = online
         self.hasUnreadMessages = hasUnreadMessages
+        self.userID = userID
         
-        if let other = otherMessages{
-            self.otherMessages = other
+        if let other = messages{
+            self.messages = other
         }
-        
     }
 }

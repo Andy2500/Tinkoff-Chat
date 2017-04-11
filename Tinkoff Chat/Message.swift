@@ -10,8 +10,14 @@ import UIKit
 
 class Message: NSObject {
     var text: String?
+    var toUser: String?
+    var fromUser: String?
+    var date: Date?
     
-    init(text: String) {
+    init(text: String, toUser: String, fromUser: String?, date: Date?) {
         self.text = text
+        self.toUser = toUser
+        self.fromUser = fromUser
+        self.date = date
     }
 }
