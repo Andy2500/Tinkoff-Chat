@@ -275,10 +275,10 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="conversationCell" rowHeight="65" id="qmv-Fq-K1D" customClass="ConversationTableViewCell" customModule="Tinkoff_Chat" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.5" width="320" height="65"/>
+                                        <rect key="frame" x="0.0" y="56" width="320" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qmv-Fq-K1D" id="HPJ-SG-qM5">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="64.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Имя" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Olt-tg-Yif">
@@ -377,7 +377,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jTi-9m-YUF" id="jJ0-51-NAY">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sj5-8O-xaa">
@@ -390,7 +390,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                    <color key="backgroundColor" red="0.0026083665669999999" green="0.91860737810000004" blue="0.0040471182210000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="ulS-yQ-wkC" firstAttribute="top" secondItem="sj5-8O-xaa" secondAttribute="top" constant="8" id="7qt-ZK-VPO"/>
                                                         <constraint firstAttribute="trailing" secondItem="ulS-yQ-wkC" secondAttribute="trailing" constant="8" id="8Pr-Ag-FKd"/>
@@ -415,7 +415,7 @@
                                         <rect key="frame" x="0.0" y="72" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rwE-Z1-OBC" id="JA3-nC-Uoo">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="16p-YM-V8B">
@@ -428,7 +428,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.0" green="0.52083333333333337" blue="1" alpha="0.73659567636986301" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="kTG-nP-xbZ" secondAttribute="trailing" constant="8" id="4Mf-Wi-VUS"/>
                                                         <constraint firstItem="kTG-nP-xbZ" firstAttribute="top" secondItem="16p-YM-V8B" secondAttribute="top" constant="8" id="HCJ-Gk-8CI"/>
@@ -471,7 +471,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="DXp-q8-GBu"/>
                                     <constraint firstAttribute="trailing" secondItem="IXx-ia-obC" secondAttribute="trailing" constant="8" id="Et4-j2-3ur"/>

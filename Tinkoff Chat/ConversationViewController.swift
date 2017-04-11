@@ -27,6 +27,12 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        if(conversation.online == false){
+            sendButton.isEnabled = false
+        }
+        
+        conversation.hasUnreadMessages = false
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -38,7 +44,7 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if conversation.messages[indexPath.row].toUser == conversation.userID{
+        if conversation.messages[indexPath.row].toUser != conversation.userID{
             let fromCell = tableView.dequeueReusableCell(withIdentifier: "fromMessageCell", for: indexPath) as! MessageTableViewCell
             fromCell.messageTextLabel.text = conversation.messages[indexPath.row].text
             return fromCell
@@ -58,6 +64,14 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+    func didFoundUser(userID: String, userName: String?){
+        DispatchQueue.main.async { [weak self] in
+            if self?.conversation.userID == userID{
+                self?.sendButton.isEnabled = true
+            }
+        }
+    }
+    
     //messages
     func didRecieveMessage(text:String, fromUser: String, toUser: String){
         DispatchQueue.main.async {
@@ -69,14 +83,14 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
     
     func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            self.tableView.frame.size.height -= keyboardSize.height
+            self.tableView.frame.origin.y += keyboardSize.height
             self.view.frame.origin.y -= keyboardSize.height
         }
     }
     
     func keyboardWillHide(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            self.tableView.frame.size.height += keyboardSize.height
+            self.tableView.frame.origin.y -= keyboardSize.height
             self.view.frame.origin.y += keyboardSize.height
         }
     }

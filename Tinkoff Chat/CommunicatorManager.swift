@@ -36,6 +36,7 @@ protocol CommunicationManagerConversationViewDelegate {
     
     //discovering
     func didLostUser(userID: String)
+    func didFoundUser(userID: String, userName: String?)
     
     //messages
     func didRecieveMessage(text:String, fromUser: String, toUser: String)
@@ -87,6 +88,7 @@ class CommunicatorManager: NSObject, CommunicatorDelegate {
     //discovering
     func didFoundUser(userID: String, userName: String?){
         self.listDelegate?.didFoundUser(userID: userID, userName: userName)
+        self.viewDelegate?.didFoundUser(userID: userID, userName: userName)
     }
     
     func didLostUser(userID: String){
@@ -111,5 +113,6 @@ class CommunicatorManager: NSObject, CommunicatorDelegate {
     
     func sendMessage(text:String, toUser: String, handler: @escaping((Bool, Error?)->Void)){
         self.communication?.sendMessage(string: text, to: toUser, complectionHandler: handler )
+        
     }
 }
