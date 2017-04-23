@@ -8,9 +8,10 @@
 
 import UIKit
 
-class ConversationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CommunicationManagerConversationViewDelegate{
+class ConversationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CommunicationServiceConversationDelegate{
     
     var conversation:Conversation = Conversation()
+    var communicationService: ICommunicationService?
     
     @IBOutlet var tableView: UITableView!
     @IBOutlet var messageTextField: UITextField!
@@ -97,12 +98,13 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
  
     @IBAction func sendButtonPressed(_ sender: Any) {
         messageTextField.endEditing(true)
-        CommunicatorManager.getManager().viewDelegate = self
-        CommunicatorManager.getManager().sendMessage(text: messageTextField.text!, toUser: conversation.userID!){
+        
+        communicationService?.viewDelegate = self
+        communicationService?.sendMessage(text: messageTextField.text!, toUser: conversation.userID!){
            [weak self] (result, error) in
             if(result){
                 DispatchQueue.main.async {
-                    self?.conversation.messages.append(Message(text: (self?.messageTextField.text!)!,toUser: (self?.conversation.userID!)!, fromUser: CommunicatorManager.getManager().myUserID!, date: Date()))
+                    self?.conversation.messages.append(Message(text: (self?.messageTextField.text!)!,toUser: (self?.conversation.userID!)!, fromUser: self?.communicationService?.myUserID!, date: Date()))
                     self?.messageTextField.text = ""
                     self?.tableView.reloadData()
                 }

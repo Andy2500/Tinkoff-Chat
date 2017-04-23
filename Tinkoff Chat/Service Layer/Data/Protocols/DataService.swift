@@ -11,6 +11,6 @@ import Foundation
 protocol DataService {
     func saveData(_ dictionary: Dictionary<String, Any>?)
     func readData()
-    
+
     var delegate: DataServiceDelegate?{ get set}
 }

@@ -29,4 +29,6 @@ class Conversation:NSObject {
             self.messages = other
         }
     }
+    
+    
 }

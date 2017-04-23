@@ -8,30 +8,19 @@
 
 import UIKit
 
-class ConversationsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CommunicationManagerConversationsListDelegate {
+class ConversationsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CommunicationServiceConversationDelegate {
     
     var conversations:Array<Array<Conversation>>  = []
+    var communicationService: ICommunicationService?
     
     @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        CommunicatorManager.getManager().listDelegate = self
         
-        /*
-         let text = "Lorem Ipsum - это текст-\"рыба\", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной \"рыбой\" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum."
-         
-         conversations.append([])
-         conversations.append([])
-         
-         conversations[0].append(Conversation.init(name: "Alex", message: text, date: Date(), online: true, hasUnreadMessages: false, otherMessages: [Message.init(text: "Да?"), Message.init(text: "\"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"")]))
-         conversations[0].append(Conversation.init(name: "Andrey", message: "\"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...\"", date: Date().addingTimeInterval(-86401), online: true, hasUnreadMessages: true, otherMessages: []))
-         conversations[0].append(Conversation.init(name: "Artemkiss", message: "Привет!", date: Date().addingTimeInterval(-1000), online: true, hasUnreadMessages: true, otherMessages: []))
-         conversations[0].append(Conversation.init(name: "Магазин одежды", message: "Скидки, скидки, скидки!", date: Date(), online: true, hasUnreadMessages: false, otherMessages: []))
-         conversations[1].append(Conversation.init(name: "Oleg", message: nil, date: Date(), online: false, hasUnreadMessages: false, otherMessages: []))
-         conversations[1].append(Conversation.init(name: "Другой магазин одежды", message: "Скидки, скидки, скидки!", date: Date().addingTimeInterval(-1000000), online: false, hasUnreadMessages: true, otherMessages: []))
-         conversations[1].append(Conversation.init(name: "Очередной спамер", message: "Купите это и купите то", date: Date().addingTimeInterval(-1000000), online: false, hasUnreadMessages: false, otherMessages: []))
-         */
+        self.communicationService = CommunicationService()
+        self.communicationService?.listDelegate = self
+        
         conversations.append([])
         conversations.append([])
         
@@ -114,7 +103,7 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
         if let cs = sender as? Conversation{
             segue.destination.navigationItem.title = cs.name
             if let vc = segue.destination as? ConversationViewController{
-                CommunicatorManager.getManager().viewDelegate = vc
+                vc.communicationService = self.communicationService
                 vc.conversation = cs
             }
         }
@@ -148,7 +137,7 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
     
     func didRecieveMessage(text:String, fromUser: String, toUser: String){
         DispatchQueue.main.async { [weak self] in
-            if CommunicatorManager.getManager().viewDelegate == nil{
+            if self?.communicationService?.viewDelegate == nil{
                 if let conversation = self?.conversations[0].first(where: { $0.userID == fromUser }){
                     conversation.messages.append(Message(text: text, toUser: toUser, fromUser: fromUser, date: Date()))
                 } else if let conversation = self?.conversations[0].first(where: { $0.userID == toUser }){
@@ -161,7 +150,7 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        CommunicatorManager.getManager().viewDelegate = nil
+        self.communicationService?.viewDelegate = nil
         self.tableView.reloadData()
     }
 }
