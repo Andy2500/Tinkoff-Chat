@@ -8,23 +8,19 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, IOModelDelegate{
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, StorageServiceDelegate{
     
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var userImageView: UIImageView!
-    @IBOutlet weak var colorLabel: UILabel!
     @IBOutlet weak var aboutTextView: UITextView!
     @IBOutlet weak var savingActivityIndicatorView: UIActivityIndicatorView!
     
-    @IBOutlet weak var saveGCDButton: UIButton!
-    @IBOutlet weak var saveOperationButton: UIButton!
-    
-    var lastPressedColorButton = 0 //0-последней не нажата ни одна кнопка, 1 - черный, 2 - красный, 3 - зеленый, 3 - синий, 4 - розовый
-    var lastTypeOfSaving = true // true - Operation, false - GCD
+    @IBOutlet weak var saveButton: UIButton!
 
-    var ioModel: IOModel?
     
-        override func viewDidLoad() {
+    var storageService = StorageService()
+    
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         userImageView.isUserInteractionEnabled = true
@@ -38,7 +34,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.savingActivityIndicatorView.hidesWhenStopped = true
         self.savingActivityIndicatorView.startAnimating()
         
-        
+        storageService.delegate = self
+        storageService.readUser()
     }
     
     func closeButtonPressed(){
@@ -46,7 +43,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-        self.makeSaveButtonsEnabled()
+        self.saveButton.isEnabled = true
     }
     
     func endEditing(){
@@ -55,7 +52,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        self.makeSaveButtonsEnabled()
+        self.saveButton.isEnabled = true
     }
     
     func imageTappend(){
@@ -99,7 +96,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     
     @IBAction func loginChanged(_ sender: Any) {
-        self.makeSaveButtonsEnabled()
+        self.saveButton.isEnabled = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -107,33 +104,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func colorButtonPressed(_ sender: Any) {
-        if let button = sender as? UIButton{
-            if button.backgroundColor != colorLabel.textColor {
-                colorLabel.textColor = button.backgroundColor
-                self.makeSaveButtonsEnabled()
-                
-                lastPressedColorButton = button.tag
-            }
-        }
-    }
-    
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        if sender.restorationIdentifier == "Operation" {
-            self.save(type: true)
-        } else if sender.restorationIdentifier == "GCD" {
-            self.save(type: false)
-        }
+        savingActivityIndicatorView.startAnimating()
+        
+        let dictionary: [String : Any?] = ["name":loginTextField.text!, "about": aboutTextView.text, "image": UIImagePNGRepresentation(userImageView.image!)!]
+        
+        storageService.saveUser(dictionary)
     }
     
-    func save(type: Bool){
-        lastTypeOfSaving = type
-        savingActivityIndicatorView.startAnimating()
-        let dictionary: [String : Any] = ["userName":loginTextField.text!, "aboutInfo": aboutTextView.text, "photo": UIImagePNGRepresentation(userImageView.image!)!, "color": lastPressedColorButton]
-        
-        ioModel?.save(dictionary, type: type)
-
-    }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
@@ -148,73 +126,38 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
             userImageView.image = selectedImage
-            self.makeSaveButtonsEnabled()
+            self.saveButton.isEnabled = true
         }
         
         dismiss(animated: true, completion: nil)
     }
     
     
-    func makeSaveButtonsEnabled(){
-        saveGCDButton.isEnabled = true
-        saveOperationButton.isEnabled = true
-    }
-    
-    func readingCompleted(_ dictionary: Dictionary<String, Any>?){
-        if let nnDictionary = dictionary{
-            self.aboutTextView.text = nnDictionary["aboutInfo"] as! String
-            self.loginTextField.text = (nnDictionary["userName"] as! String)
-            self.userImageView.image = UIImage(data: nnDictionary["photo"] as! Data)
-            
-            switch nnDictionary["color"] as! Int {
-            case 1:
-                self.colorLabel.textColor = UIColor.black
-            case 2:
-                self.colorLabel.textColor = UIColor.red
-            case 3:
-                self.colorLabel.textColor = UIColor.green
-            case 4:
-                self.colorLabel.textColor = UIColor.blue
-            case 5:
-                self.colorLabel.textColor = UIColor.magenta
-            default:
-                break
-            }
-        }
-        
-        self.savingActivityIndicatorView.stopAnimating()
-    }
-    
-    func savingCompleted(){
-        let alert = UIAlertController(title: "Сохранение", message: "", preferredStyle: .alert)
-        let actionOk = UIAlertAction(title: "Ок", style: .default, handler: nil)
+    func userSaved(){
+        DispatchQueue.main.async {[weak self] in
+            let alert = UIAlertController(title: "Сохранение", message: "", preferredStyle: .alert)
+            let actionOk = UIAlertAction(title: "Ок", style: .default, handler: nil)
             alert.addAction(actionOk)
-
-        
-        self.saveGCDButton.isEnabled = false
-        self.saveOperationButton.isEnabled = false
-        self.present(alert, animated: true, completion: nil)
-    }
-
-    func savingFinishedwithError(_ error: Error){
-        let alert = UIAlertController(title: "Сохранение", message: "", preferredStyle: .alert)
-        let actionOk = UIAlertAction(title: "Ок", style: .default, handler: nil)
-        let actionReload = UIAlertAction(title: "Повторить", style: .default){
-            [weak self](alert) in
-            if let this = self {
-                this.save(type: (this.lastTypeOfSaving))
-            }
+            
+            
+            self?.saveButton.isEnabled = false
+            self?.present(alert, animated: true, completion: nil)
         }
-        
-        alert.addAction(actionOk)
-        alert.addAction(actionReload)
-        
-        self.savingActivityIndicatorView.stopAnimating()
-        self.present(alert, animated: true, completion: nil)
     }
     
-    func readingFinishedwithError(_ error: Error){
-        
+    func userLoaded(user: User?){
+        DispatchQueue.main.async {[weak self] in
+            if let user = user{
+                self?.aboutTextView.text = user.about
+                self?.loginTextField.text = user.name
+                if user.image != nil {
+                    self?.userImageView.image = UIImage(data: user.image as! Data)
+                }
+                
+            }
+            
+            self?.savingActivityIndicatorView.stopAnimating()
+        }
     }
 }
 

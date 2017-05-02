@@ -13,7 +13,7 @@ protocol SModel {
 }
 
 protocol RModel {
-    func read(type: Bool)
+      func read(type: Bool)
 }
 
 class IOModel: NSObject, DataServiceDelegate, RModel, SModel {

@@ -8,9 +8,9 @@
 
 import Foundation
 
-protocol DataService {
-    func saveData(_ dictionary: Dictionary<String, Any>?)
-    func readData()
+protocol DataUserService {
+    func saveUser(_ dictionary: Dictionary<String, Any?>?)
+    func readUser()
 
-    var delegate: DataServiceDelegate?{ get set}
+    var delegate: StorageServiceDelegate?{ get set}
 }
