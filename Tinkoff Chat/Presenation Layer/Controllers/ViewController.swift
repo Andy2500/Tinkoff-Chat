@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, StorageServiceDelegate{
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, StorageServiceDelegate, PhotoDelegate{
     
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var userImageView: UIImageView!
@@ -17,7 +17,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var saveButton: UIButton!
 
-    
     var storageService = StorageService()
     
     override func viewDidLoad() {
@@ -78,9 +77,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             }
         }
         
+        let loadAction = UIAlertAction(title: "Загрузить", style: .default){(alert) in
+            DispatchQueue.main.async {[weak self] in
+                self?.performSegue(withIdentifier: "loadPhotos", sender: nil)
+            }
+        }
+        
         choosingController.addAction(photoAction)
         choosingController.addAction(libraryAction)
-        
+        choosingController.addAction(loadAction)
         if(self.userImageView.image != UIImage(named: "placeholder-user")){
             let deleteAction = UIAlertAction(title: "Удалить фотографию", style: .default){ (alert) in
                 self.userImageView.image = UIImage(named: "placeholder-user")
@@ -139,7 +144,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             let actionOk = UIAlertAction(title: "Ок", style: .default, handler: nil)
             alert.addAction(actionOk)
             
-            
             self?.saveButton.isEnabled = false
             self?.present(alert, animated: true, completion: nil)
         }
@@ -153,10 +157,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 if user.image != nil {
                     self?.userImageView.image = UIImage(data: user.image as! Data)
                 }
-                
             }
-            
             self?.savingActivityIndicatorView.stopAnimating()
+        }
+    }
+    
+    func photoSelected(photo: UIImage){
+        self.userImageView.image = photo
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let navVc = segue.destination as? UINavigationController{
+            if let vc = navVc.viewControllers.first as? PhotosCollectionViewController{
+                vc.delegate = self
+            }
         }
     }
 }

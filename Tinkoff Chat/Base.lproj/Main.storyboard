@@ -129,11 +129,63 @@
                         <outlet property="saveButton" destination="3VK-JP-e4s" id="L2h-Fc-0w9"/>
                         <outlet property="savingActivityIndicatorView" destination="AFq-9Y-K3w" id="KIQ-Bm-dXi"/>
                         <outlet property="userImageView" destination="cdG-XE-lqr" id="YzZ-bG-E4u"/>
+                        <segue destination="d2K-DQ-8pQ" kind="show" identifier="loadPhotos" id="oph-5c-Ulr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1338.75" y="-404.57746478873241"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="7ja-DK-bfB">
+            <objects>
+                <navigationController id="d2K-DQ-8pQ" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nvh-f4-DxD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="PDA-n9-x4y" kind="relationship" relationship="rootViewController" id="Dxo-LD-txw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o19-U7-3Gf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2237" y="-405"/>
+        </scene>
+        <!--Photos Collection View Controller-->
+        <scene sceneID="VNc-Rq-uho">
+            <objects>
+                <collectionViewController id="PDA-n9-x4y" customClass="PhotosCollectionViewController" customModule="Tinkoff_Chat" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="EZs-1a-jIW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sgv-dO-Ufd">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="czQ-Bz-95z">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="PDA-n9-x4y" id="wJm-wb-Wqj"/>
+                            <outlet property="delegate" destination="PDA-n9-x4y" id="wlc-Vb-ibC"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="tbk-Zb-7PI"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sNa-UO-7kr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3161" y="-409"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4yW-hY-rcp">

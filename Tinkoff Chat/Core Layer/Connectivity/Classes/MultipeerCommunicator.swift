@@ -90,7 +90,6 @@ class MultipeerCommunicator : NSObject, MCNearbyServiceBrowserDelegate,MCSession
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         print("didReceiveInvitationFromPeer \(peerID)")
         
-        //if self.sessions.contains(where: {$0.connectedPeers.contains(peerID)} ){
         if self.onlinePeers.contains(peerID){
             invitationHandler(false, nil)
         } else {
@@ -101,8 +100,10 @@ class MultipeerCommunicator : NSObject, MCNearbyServiceBrowserDelegate,MCSession
             invitationHandler(true, session)
             
             do {
-                if let json = try JSONSerialization.jsonObject(with: context!, options: []) as? Dictionary<String, String>{
-                    delegate?.didFoundUser(userID: peerID.displayName, userName: json["userName"]!)
+                if let context = context {
+                    if let json = try JSONSerialization.jsonObject(with: context, options: []) as? Dictionary<String, String>{
+                        delegate?.didFoundUser(userID: peerID.displayName, userName: json["userName"]!)
+                    }
                 }
             } catch {
                 invitationHandler(false, nil)
