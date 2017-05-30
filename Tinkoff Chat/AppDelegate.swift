@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let rootAssembly = Assembly()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+
         return true
     }
 

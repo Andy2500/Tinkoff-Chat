@@ -17,9 +17,4 @@ class Assembly: NSObject {
         service.listDelegate = vc
         return vc
     }
-
-    
-    // MARK: - PRIVATE SECTION
-    
-
 }

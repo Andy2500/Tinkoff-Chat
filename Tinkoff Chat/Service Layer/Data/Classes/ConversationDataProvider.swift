@@ -6,6 +6,7 @@
 //  Copyright © 2017 Andrey. All rights reserved.
 //
 
+/*
 import UIKit
 import CoreData
 
@@ -75,4 +76,4 @@ extension ConversationDataProvider: NSFetchedResultsControllerDelegate {
     }
     
 }
-
+*/

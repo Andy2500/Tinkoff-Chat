@@ -31,10 +31,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(closeButtonPressed))
         
         self.savingActivityIndicatorView.hidesWhenStopped = true
-        self.savingActivityIndicatorView.startAnimating()
+//        self.savingActivityIndicatorView.startAnimating()
         
-        storageService.delegate = self
-        storageService.readUser()
+//        storageService.delegate = self
+//        storageService.readUser()
+        
+        self.view.isUserInteractionEnabled = true
+        let gR = SelfGestureRecognizer(target:self, action: nil)
+        self.view.addGestureRecognizer(gR)
     }
     
     func closeButtonPressed(){

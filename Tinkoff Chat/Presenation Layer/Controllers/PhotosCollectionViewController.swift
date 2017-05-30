@@ -30,6 +30,10 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
         self.collectionView?.delegate = self
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.close))
         service.loadPhotos(completionHandler:  self.updateCompleted)
+        
+        self.view.isUserInteractionEnabled = true
+        let gR = SelfGestureRecognizer(target:self, action: nil)
+        self.view.addGestureRecognizer(gR)
     }
     
     func updateCompleted(photos: [PhotoApiModel]?, string: String?) -> Void{
@@ -71,7 +75,6 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        //2
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
@@ -79,14 +82,12 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
     
-    //3
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return sectionInsets
     }
     
-    // 4
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {

@@ -35,15 +35,6 @@ class CommunicationService: NSObject, CommunicatorDelegate, ICommunicationServic
         self.listDelegate?.didLostUser(userID: userID)
     }
     
-    //errors
-    func failedToStartBrowsingForUsers(error: Error){
-        
-    }
-    
-    func failedToStartAdvertising(error: Error){
-        
-    }
-    
     //messages
     func didRecieveMessage(text:String, fromUser: String, toUser: String){
         self.viewDelegate?.didRecieveMessage(text: text, fromUser: fromUser, toUser: toUser)
